@@ -7,26 +7,27 @@
                     <form id="submissionForm" @submit.prevent="submitHandler">
                         <div class="form-group mb-3">
                             <label for="title" class="form-label">Title</label>
-                            <input v-model="formData.title" type="text" class="form-control" id="title"
+                        
+                            <input v-model="title" type="text" class="form-control" id="title"
                                 placeholder="Enter title" />
                             <span class="error-message"></span>
                         </div>
                         <div class="form-group mb-3">
                             <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" v-model="formData.description" id="description" rows="3"
+                            <textarea class="form-control" v-model="description" id="description" rows="3"
                                 placeholder="Enter description"></textarea>
                             <span class="error-message"></span>
                         </div>
                         <div class="form-group mb-5">
                             <label for="address" class="form-label">Address</label>
-                            <input v-model="formData.address" type="text" class="form-control" id="address"
+                            <input v-model="address" type="text" class="form-control" id="address"
                                 placeholder="Enter address" />
                             <span class="error-message"></span>
                         </div>
 
                         <div class="form-group mt-3 mb-3">
                             <label for="image" class="form-label">Upload Image</label>
-                            <input type="file" class="form-control" id="image" accept="image/*" />
+                            <input type="file" @change='onFileChange' class="form-control" id="image"/>
                         </div>
 
                         <div style="text-align: center">
@@ -44,41 +45,49 @@
 
 <script>
 
-import axios from 'axios';
+// import axios from 'axios';
 export default {
     name: "AddPlace",
     data() {
 
         return {
-            formData: {
+             
                 title: "",
                 description: "",
                 address: "",
-                image: ""
-            },
+                selectedImage: null
 
 
         }
 
     },
     computed: {
-        token() {
-            return this.$store.getters.token
-        }
+        // token() {
+        //     return this.$store.getters.token
+        // }
 
     },
     methods: {
-        submitHandler() {
+    async submitHandler(){
+        // console.log(this.title)
+        // console.log(this.description)
+        console.log(this.selectedImage)
+        
+    //   const  url="http://localhost:90/api/add/places";
+    
+    },
+    
+    onFileChange(event) {
+        this.selectedImage = event.target.files[0]; 
 
-            axios.post("http://localhost:90/api/places").then(() => {
-                alert("add place successfully")
-            }).catch((err) => {
-                console.log("error",err)
-            })
-        }
+}
+   
+  
+    }
+
 
     }
-}
+
 
 </script>
 <style scoped>
